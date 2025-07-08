@@ -1,52 +1,51 @@
 <?php
 session_start();
-include_once '../Cores/Database.php'; // Pastikan file ini berisi koneksi ke DB
+require_once '../Cores/Database.php'; // Koneksi OOP PDO
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = htmlspecialchars($_POST['nama']);
+    $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
     $role = htmlspecialchars($_POST['role']);
 
-    // Cek user di database
-    $stmt = $conn->prepare("SELECT * FROM users WHERE nama = ? AND email = ? AND role = ?");
-    $stmt->bind_param("sss", $nama, $email, $role);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Gunakan class Database
+    $db = new Database();
+    $db->query("SELECT * FROM users WHERE name = :name AND email = :email AND role = :role");
+    $db->bind(':name', $name);
+    $db->bind(':email', $email);
+    $db->bind(':role', $role);
+    $user = $db->single();
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+    if ($user && $user['password'] === $password) {
+        $_SESSION['user'] = $user;
 
-        // Cek password (tanpa hash)
-        if ($user['password'] === $password) {
-            $_SESSION['user'] = $user;
+        $redirectUrl = ($role === 'Admin') ? '../Views/Admin/Dashboard.php' : '../Views/Driver/Dashboard.php';
 
-            // Tampilkan verifikasi dan redirect
-            echo "<!DOCTYPE html>
-            <html lang='id'>
-            <head>
-                <meta charset='UTF-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <title>Data Terverifikasi</title>
-                <meta http-equiv='refresh' content='2;url=/admin/dashboard.php'>
-                <script src='https://cdn.tailwindcss.com'></script>
-            </head>
-            <body class='flex items-center justify-center h-screen bg-gray-100'>
-                <div class='bg-white p-10 rounded-xl shadow-lg w-[480px] text-center'>
-                    <img src='../gambar/logo-cpo.jpg' alt='Logo' class='w-32 mx-auto mb-5'>
-                    <h2 class='text-xl font-bold uppercase text-gray-700 mb-4'>Data Terverifikasi</h2>
-                    <div class='text-left bg-gray-100 p-5 rounded-lg'>
-                        <p class='mb-2'><span class='font-semibold'>Nama:</span> $nama</p>
-                        <p class='mb-2'><span class='font-semibold'>Email:</span> $email</p>
-                        <p class='mb-2'><span class='font-semibold'>Role:</span> $role</p>
-                        <p><span class='font-semibold'>Password:</span> " . str_repeat('*', strlen($password)) . "</p>
-                    </div>
-                    <p class='mt-5 text-sm text-gray-500'>Mengalihkan ke dashboard...</p>
+        // Tampilkan verifikasi dan redirect
+        echo "<!DOCTYPE html>
+        <html lang='id'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Data Terverifikasi</title>
+            <meta http-equiv='refresh' content='2;url=$redirectUrl'>
+            <script src='https://cdn.tailwindcss.com'></script>
+        </head>
+        <body class='flex items-center justify-center h-screen bg-gray-100'>
+            <div class='bg-white p-10 rounded-xl shadow-lg w-[480px] text-center'>
+                <img src='../gambar/logo-cpo.jpg' alt='Logo' class='w-32 mx-auto mb-5'>
+                <h2 class='text-xl font-bold uppercase text-gray-700 mb-4'>Data Terverifikasi</h2>
+                <div class='text-left bg-gray-100 p-5 rounded-lg'>
+                    <p class='mb-2'><span class='font-semibold'>Nama:</span> $name</p>
+                    <p class='mb-2'><span class='font-semibold'>Email:</span> $email</p>
+                    <p class='mb-2'><span class='font-semibold'>Role:</span> $role</p>
+                    <p><span class='font-semibold'>Password:</span> " . str_repeat('*', strlen($password)) . "</p>
                 </div>
-            </body>
-            </html>";
-            exit;
-        }
+                <p class='mt-5 text-sm text-gray-500'>Mengalihkan ke dashboard...</p>
+            </div>
+        </body>
+        </html>";
+        exit;
     }
 
     // Jika gagal login
@@ -77,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="space-y-5 text-left">
       <div>
-        <label for="nama" class="block text-sm font-semibold text-gray-600 uppercase mb-1">Nama</label>
-        <input type="text" id="nama" name="nama" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600">
+        <label for="name" class="block text-sm font-semibold text-gray-600 uppercase mb-1">Nama</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600">
       </div>
       <div>
         <label for="email" class="block text-sm font-semibold text-gray-600 uppercase mb-1">Email</label>
