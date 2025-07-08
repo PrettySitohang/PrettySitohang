@@ -1,49 +1,53 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar CPO</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
-
-
-  <title>Navbar</title>
-
 </head>
-<body>
+<body class="bg-gray-100">
 
-<nav class="fixed top-0 left-0 w-full z-50 border-b border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-     <?php include 'Header.php'; ?>
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-    </a>
-    <button data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">
-      <span class="sr-only">Open main menu</span>
-      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="r ound" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+  <!-- Tombol Hamburger -->
+  <nav class="flex justify-between  bg-success shadow-md ">
+    <?php include_once 'Header.php'; ?>
+    <button id="menuButton" class="p-2 m-8 rounded-md border h-10 bg-white hover:bg-gray-200 transition">
+      <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
-    <div class="hidden w-full" id="navbar-hamburger">
-      <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-        <li>
-          <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded-sm dark:bg-blue-600" aria-current="page">Home</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Services</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white">Pricing</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Contact</a>
-        </li>
+  </nav>
+
+  <!-- Sidebar Menu di Kanan -->
+  <div id="sidebarMenu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <div class="p-6">
+      <button id="closeMenu" class="text-gray-500 hover:text-red-500 float-right text-2xl font-bold">×</button>
+      <ul class="mt-12 space-y-4">
+        <li><a href="Login.php" class="block text-green-700 font-semibold hover:text-green-900">🔐 Login</a></li>
+        <li><a href="Login.php" class="block text-green-700 font-semibold hover:text-green-900">📊 Dashboard</a></li>
+        <li><a href="Dashboard.php" class="block text-green-700 font-semibold hover:text-green-900">🚚 Pengiriman</a></li>
       </ul>
     </div>
   </div>
-</nav>
+
+  <!-- Script Toggle -->
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    menuButton.addEventListener('click', () => {
+      sidebarMenu.classList.remove('translate-x-full');
+    });
+
+    closeMenu.addEventListener('click', () => {
+      sidebarMenu.classList.add('translate-x-full');
+    });
+  </script>
 
 </body>
 </html>
