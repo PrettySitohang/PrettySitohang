@@ -21,7 +21,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center ">
-          <img src="../gambar/logo-cpo.jpg" alt="Logo CPO" class="h-20 px-4 rounded-circle"> 
+          <img src="http://localhost/GithubPretty/PrettySitohang/MVC/gambar/logo-cpo.jpg" alt="Logo CPO" class="h-20 px-4 rounded-circle"> 
       <span class="fw-bold ">Monitoring Transportasi CPO</span>
     </a>
   </div>
