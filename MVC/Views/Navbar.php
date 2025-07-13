@@ -42,9 +42,11 @@ session_start();
               <a href="../Admin/Dashboard.php" class="block text-green-700 font-semibold hover:text-green-900">📊 Dashboard Admin</a>
             </li>
             <li>
-              <a href="../Admin/Armada/index.php" class="block text-green-700 font-semibold hover:text-green-900">🚚 Kelola Armada</a>
+              <a href="../Admin/Kendaraan.php" class="block text-green-700 font-semibold hover:text-green-900">🚚 Kelola Armada</a>
             </li>
-            <!-- Tambah menu lain khusus admin jika ada -->
+            <li>
+              <a href="../Admin/Jadwal/index.php" class="block text-green-700 font-semibold hover:text-green-900">🗓 Jadwal</a>
+            </li>
 
           <!-- Menu untuk Driver -->
           <?php elseif ($_SESSION['user']['role'] === 'Driver'): ?>
@@ -52,19 +54,19 @@ session_start();
               <a href="../Driver/Dashboard.php" class="block text-green-700 font-semibold hover:text-green-900">🚛 Dashboard Driver</a>
             </li>
             <li>
-              <a href="../Driver/Jadwal/index.php" class="block text-green-700 font-semibold hover:text-green-900">📅 Jadwal</a>
+              <a href="Jadwal.php" class="block text-green-700 font-semibold hover:text-green-900">📅 Jadwal</a>
             </li>
           <?php endif; ?>
 
           <!-- Tombol Logout -->
           <li>
-            <a href="http://localhost/GithubPretty/PrettySitohang/MVC/views/Login.php" class="block text-red-600 font-semibold hover:text-red-800">🚪 Logout</a>
+            <a href="../logout.php" class="block text-red-600 font-semibold hover:text-red-800">🚪 Logout</a>
           </li>
 
         <?php else: ?>
           <!-- Jika belum login -->
           <li>
-            <a href="Login.php" class="block text-green-700 font-semibold hover:text-green-900">🔐 Login</a>
+            <a href="../Login.php" class="block text-green-700 font-semibold hover:text-green-900">🔐 Login</a>
           </li>
         <?php endif; ?>
 

@@ -1,49 +1,62 @@
+<?php
+require_once '../../../Cores/Database.php';
+$db = new Database();
+
+// Ambil semua data user dengan role 'Driver'
+$db->query("SELECT * FROM users WHERE role = 'Driver' ORDER BY id ASC");
+$drivers = $db->resultSet();
+?>
+
+<?php include_once('../../Navbar.php'); ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Indeks</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Driver</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('../../../gambar/logo-cpo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
 </head>
-<body>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">Data Driver</h1>
-    <div class="flex justify-end mb-4">
-        <a href="tambahData.php" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">+ Tambah Driver</a>
+<body class="backdrop-blur-md min-h-screen">
+  <div class="container mx-auto px-6 py-10">
+    <div class="flex justify-between items-center mb-6 bg-white bg-opacity-80 p-6 rounded-xl shadow">
+      <h1 class="text-3xl font-bold text-green-800">Daftar Driver</h1>
+      <a href="tambahData.php" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 shadow">+ Tambah Driver</a>
     </div>
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
-            <thead class="bg-blue-600 text-white">
-                <tr>
-                    <th class="py-3 px-4 border-b">No</th>
-                    <th class="py-3 px-4 border-b">Nama</th>
-                    <th class="py-3 px-4 border-b">Username</th>
-                    <th class="py-3 px-4 border-b">Email</th>
-                    <th class="py-3 px-4 border-b">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $no = 1;
-                foreach ($data['driver'] as $d) : ?>
-                    <tr class="hover:bg-gray-100">
-                        <td class="py-2 px-4 border-b text-center"><?= $no++; ?></td>
-                        <td class="py-2 px-4 border-b"><?= $d['name']; ?></td>
-                        <td class="py-2 px-4 border-b"><?= $d['username']; ?></td>
-                        <td class="py-2 px-4 border-b"><?= $d['email']; ?></td>
-                        <td class="py-2 px-4 border-b text-center">
-                            <a href="edit.php?id=<?= $d['id']; ?>" class="text-yellow-600 hover:underline mr-2">Edit</a>
-                            <a href="hapus.php?id=<?= $d['id']; ?>" onclick="return confirm('Hapus driver ini?')" class="text-red-600 hover:underline">Hapus</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
 
+    <div class="bg-white bg-opacity-90 rounded-xl shadow-lg overflow-x-auto">
+      <table class="min-w-full divide-y divide-green-200">
+        <thead class="bg-green-200">
+          <tr>
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">No</th>
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">Nama</th>
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">Username</th>
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">Email</th>
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">Password</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-300">
+          <?php $no = 1; foreach ($drivers as $driver): ?>
+          <tr class="hover:bg-green-50">
+            <td class="px-6 py-4 text-sm text-gray-800 font-medium"><?= $no++ ?></td>
+            <td class="px-6 py-4 text-sm text-gray-800"><?= htmlspecialchars($driver['name']) ?></td>
+            <td class="px-6 py-4 text-sm text-gray-800"><?= htmlspecialchars($driver['username']) ?></td>
+            <td class="px-6 py-4 text-sm text-gray-800"><?= htmlspecialchars($driver['email']) ?></td>
+            <td class="px-6 py-4 text-sm text-gray-800"><?= htmlspecialchars($driver['password']) ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <?php include_once('../../Footer.php'); ?>
 </body>
 </html>

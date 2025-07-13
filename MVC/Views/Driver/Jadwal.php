@@ -1,5 +1,5 @@
 <?php
-require_once '../../../Cores/Database.php'; // Koneksi OOP PDO
+require_once '../../Cores/Database.php'; // Koneksi OOP PDO
 
 $db = new Database();
 
@@ -17,7 +17,7 @@ $db->query("
 $trips = $db->resultSet();
 ?>
 
-<?php include_once('../../Navbar.php'); ?>
+<?php include_once('../Navbar.php'); ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,22 +48,12 @@ $trips = $db->resultSet();
   </div>
 
   <!-- Search -->
-   <div class="mb-8 flex items-center gap-8">
   <div class="mb-8 relative w-full md:w-1/2">
     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
       <i class="fas fa-search"></i>
     </span>
     <input type="text" id="searchInput" placeholder="Cari nama driver, rute, atau status..." 
            class="pl-10 pr-4 py-2 w-full border border-green-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"/>
-  </div>
-   <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'Admin'): ?>
-    <div class="flex justify-end mb-4">
-        <a href="tambahData.php" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow transition">
-          <i class="fas fa-plus mr-2"></i> Tambah Jadwal
-        </a>
-      </div>
-    <?php endif; ?>
-
   </div>
 
   <!-- Jadwal Cards -->
