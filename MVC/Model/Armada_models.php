@@ -1,68 +1,20 @@
 <?php
-
-class Armada_model
-{
-    private $table = 'vehicles';
+class TripModel {
     private $db;
 
-    public function __construct()
-    {
-        $this->db = new Database; // Memanggil class Database di folder Cores
+    public function __construct() {
+        $this->db = new Database;
     }
 
-    public function getAllArmada()
-    {
-        $this->db->query("SELECT * FROM $this->table");
-        return $this->db->resultSet();
-    }
-
-    public function getArmadaById($id)
-    {
-        $this->db->query("SELECT * FROM $this->table WHERE id = :id");
-        $this->db->bind(':id', $id);
-        return $this->db->single();
-    }
-
-    public function tambahArmada($data)
-    {
-        $query = "INSERT INTO $this->table (name, type, volume, plat_number, description) 
-                  VALUES (:name, :type, :volume, :plat_number, :description)";
-
-        $this->db->query($query);
-        $this->db->bind(':name', $data['name']);
-        $this->db->bind(':type', $data['type']);
-        $this->db->bind(':volume', $data['volume']);
-        $this->db->bind(':plat_number', $data['plat_number']);
-        $this->db->bind(':description', $data['description']);
-
-        return $this->db->execute();
-    }
-
-    public function updateArmada($data)
-    {
-        $query = "UPDATE $this->table SET 
-                    name = :name,
-                    type = :type,
-                    volume = :volume,
-                    plat_number = :plat_number,
-                    description = :description
-                  WHERE id = :id";
-
-        $this->db->query($query);
-        $this->db->bind(':name', $data['name']);
-        $this->db->bind(':type', $data['type']);
-        $this->db->bind(':volume', $data['volume']);
-        $this->db->bind(':plat_number', $data['plat_number']);
-        $this->db->bind(':description', $data['description']);
-        $this->db->bind(':id', $data['id']);
-
-        return $this->db->execute();
-    }
-
-    public function hapusArmada($id)
-    {
-        $this->db->query("DELETE FROM $this->table WHERE id = :id");
-        $this->db->bind(':id', $id);
+    public function tambahTrip($data) {
+        $this->db->query("INSERT INTO trips (departure_date, `from`, destination, total_teams, quantity_of_cpo, estimation_arrival_date, created_at)
+                          VALUES (:departure_date, :from, :destination, :total_teams, :quantity_of_cpo, :estimation_arrival_date, CURRENT_TIMESTAMP)");
+        $this->db->bind(':departure_date', $data['departure_date']);
+        $this->db->bind(':from', $data['from']);
+        $this->db->bind(':destination', $data['destination']);
+        $this->db->bind(':total_teams', $data['total_teams']);
+        $this->db->bind(':quantity_of_cpo', $data['quantity_of_cpo']);
+        $this->db->bind(':estimation_arrival_date', $data['estimation_arrival_date']);
         return $this->db->execute();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../../Cores/Database.php'; // Koneksi OOP PDO
+require_once 'D:\MyProjek\XAMM\htdocs\GithubPretty\PrettySitohang\MVC\Cores\Database.php';
 $db = new Database();
 
 // Ambil satu driver acak
@@ -19,11 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity_of_cpo = $_POST['quantity_of_cpo'];
     $estimation_arrival_date = $_POST['estimation_arrival_date'];
 
-    $db->query("INSERT INTO trips (`departure_date`, `from`, `destination`, `total_teams`, `quantity_of_cpo`, `estimation_arrival_date`, `created_at`) 
-            VALUES (:departure_date, :from, :destination, :total_teams, :quantity_of_cpo, :estimation_arrival_date, CURRENT_TIMESTAMP)");
-
-
-   $db->bind(':departure_date', $departure_date);
+    $db->query("INSERT INTO trips (departure_date, `from`, destination, total_teams, quantity_of_cpo, estimation_arrival_date, created_at) 
+                VALUES (:departure_date, :from, :destination, :total_teams, :quantity_of_cpo, :estimation_arrival_date, CURRENT_TIMESTAMP)");
+    $db->bind(':departure_date', $departure_date);
     $db->bind(':from', $from);
     $db->bind(':destination', $destination);
     $db->bind(':total_teams', $total_teams);

@@ -1,86 +1,99 @@
-<?php
-require_once '../../../Cores/Database.php';
-
-$db = new Database();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $name = $_POST['name'];
-  $type = $_POST['type'];
-  $volume = $_POST['volume'];
-  $plat_number = $_POST['plat_number'];
-  $description = $_POST['description'];
-
-  $db->query("INSERT INTO vehicles (name, type, volume, plat_number, description) VALUES (:name, :type, :volume, :plat_number, :description)");
-  $db->bind(':name', $name);
-  $db->bind(':type', $type);
-  $db->bind(':volume', $volume);
-  $db->bind(':plat_number', $plat_number);
-  $db->bind(':description', $description);
-  $db->execute();
-
-  header('Location: index.php');
-  exit;
-}
-?>
-
-<?php include_once('../../Navbar.php'); ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tambah Armada</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      background-image: url('../../../gambar/logo-cpo.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    .glass {
-      background-color: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-    }
-  </style>
-</head>
-<body class="min-h-screen flex items-center justify-center">
-  <div class="glass max-w-2xl w-full p-8  shadow-2xl">
-    <h1 class="text-3xl font-bold text-green-800 mb-6 text-center">Tambah Data Armada</h1>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tambah Data Armada</title>
 
-    <form method="post" class="space-y-5">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0fdf4',
+              100: '#e2f7e9',
+              200: '#c5efd3',
+              300: '#99e2b4',
+              400: '#65ce8f',
+              500: '#3dbd73',
+              600: '#1a8641',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+</head>
+
+
+<body class="min-h-screen bg-gradient-to-br from-primary-100 via-white to-primary-200 flex items-center justify-center px-4 py-12">
+  <div class="bg-white bg-opacity-90 backdrop-blur-xl shadow-2xl rounded-3xl p-10 w-full max-w-2xl transition-all duration-500 hover:shadow-primary-200">
+    <h1 class="text-4xl font-extrabold text-primary-700 text-center mb-10 tracking-tight">
+      <i class="fa-solid fa-truck mr-2"></i>Tambah Data Armada
+    </h1>
+
+    <form action="" method="post" class="space-y-6">
+      <!-- Nama Kendaraan -->
       <div>
-        <label class="block text-gray-700 font-semibold mb-1">Nama Kendaraan</label>
-        <input type="text" name="name" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-700">
+        <label for="name" class="block text-lg font-medium text-primary-700 mb-1">Nama Kendaraan</label>
+        <input type="text" id="name" name="name" required
+          class="w-full px-5 py-3 border border-primary-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition duration-200" />
       </div>
+
+      <!-- Tipe Kendaraan -->
       <div>
-        <label class="block text-gray-700 font-semibold mb-1">Tipe</label>
-        <select name="type" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-700">
+        <label for="type" class="block text-lg font-medium text-primary-700 mb-1">Tipe Kendaraan</label>
+        <select id="type" name="type" required
+          class="w-full px-5 py-3 border border-primary-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition duration-200">
           <option value="">-- Pilih Tipe --</option>
           <option value="small">Small</option>
           <option value="big">Big</option>
           <option value="jumbo">Jumbo</option>
         </select>
       </div>
+
+      <!-- Volume -->
       <div>
-        <label class="block text-gray-700 font-semibold mb-1">Volume</label>
-        <input type="text" name="volume" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-700">
+        <label for="volume" class="block text-lg font-medium text-primary-700 mb-1">Volume</label>
+        <input type="text" id="volume" name="volume" required
+          class="w-full px-5 py-3 border border-primary-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition duration-200" />
       </div>
+
+      <!-- Plat Nomor -->
       <div>
-        <label class="block text-gray-700 font-semibold mb-1">Plat Nomor</label>
-        <input type="text" name="plat_number" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-700">
+        <label for="plat_number" class="block text-lg font-medium text-primary-700 mb-1">Plat Nomor</label>
+        <input type="text" id="plat_number" name="plat_number" required
+          class="w-full px-5 py-3 border border-primary-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition duration-200" />
       </div>
+
+      <!-- Deskripsi -->
       <div>
-        <label class="block text-gray-700 font-semibold mb-1">Deskripsi</label>
-        <textarea name="description" rows="4" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-700"></textarea>
+        <label for="description" class="block text-lg font-medium text-primary-700 mb-1">Deskripsi</label>
+        <textarea id="description" name="description" rows="4"
+          class="w-full px-5 py-3 border border-primary-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition duration-200"></textarea>
       </div>
-      <div class="text-center">
-        <button type="submit" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-6 rounded-lg transition">Simpan</button>
+
+      <!-- Tombol Simpan -->
+      <div class="text-center pt-4">
+        <button type="submit" name="submit"
+          class="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-10 py-3 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300">
+          <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan
+        </button>
       </div>
     </form>
   </div>
-  <?php include_once('../../Footer.php'); ?>
+
 </body>
 </html>
